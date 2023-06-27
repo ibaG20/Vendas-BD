@@ -23,7 +23,7 @@ export const db = {
  */
 
 
-import pkg from 'pg';
+/* import pkg from 'pg';
 const { Client } = pkg;
 
 export const db = new Client({
@@ -33,4 +33,15 @@ export const db = new Client({
     database: "attdb2" 
 });
 
-db.connect(); 
+db.connect();  */
+
+import pkg from 'pg';
+const { Client } = pkg;
+
+export const db = {
+    host: "localhost",
+    user: "administrador",
+    password: "root", 
+    database: "attdb2" 
+};
+//db.connect();
