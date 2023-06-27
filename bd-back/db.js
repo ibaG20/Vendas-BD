@@ -36,7 +36,7 @@ export const db = new Client({
 db.connect();  */
 
 import pkg from 'pg';
-const { Client } = pkg;
+//const { Client } = pkg;
 
 export const db = {
     host: "localhost",
