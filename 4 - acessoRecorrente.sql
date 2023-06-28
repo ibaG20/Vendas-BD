@@ -1,4 +1,4 @@
--- Iniciar a primeira transação
+-- Iniciar a primeira transação com user VENDEDOR - senha root
 BEGIN;
 
 -- Realizar operações na tabela
@@ -10,7 +10,7 @@ SELECT pg_sleep(5);
 -- Confirmar a primeira transação
 COMMIT;
 
--- Iniciar a segunda transação
+-- Iniciar a segunda transação com user ADMINISTRADOR - senha root
 BEGIN;
 
 -- Realizar operações na tabela
