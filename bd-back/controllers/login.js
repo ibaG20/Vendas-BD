@@ -6,11 +6,9 @@ const { Client } = pkg;
 export const postLogin = async (req, res) => {
     // Conecta com o usuário e senha fornecidos
     const client = new Client({
-        //host: "localhost",
         ...db,
         user: req.body.username,
         password: req.body.password,
-        //database: "attdb2"
     });
 
     try {
@@ -20,7 +18,7 @@ export const postLogin = async (req, res) => {
         const token = jwt.sign(
             { username: req.body.username, role: 'admin' },  // payload
             'your-secret-key',                               // secret key
-            { expiresIn: '1h' }                               // options
+            { expiresIn: '1h' }                              // options
         );
         //--------------------------------------------------------------------------------
         
