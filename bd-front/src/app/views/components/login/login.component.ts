@@ -11,14 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 
 export class LoginComponent {
 
-  /* loginn: Login ={
-    
-  } */
-  /* username!: 'administrador';
-  password!: 'root'; */
-
-  username!: "administrador";
-  password!: "root";
+  username!: 'zesxrdctfvygbuh';
+  password!: '';
   //errorMessage!: string; // Variável para armazenar a mensagem de erro
 
   constructor(private authService: AuthService, private router: Router) {} // Injetando o Router
@@ -32,7 +26,10 @@ export class LoginComponent {
       this.router.navigate(['/']);
       this.authService.message('Login realizado com sucesso!')
     }, err => {
-      console.log(err)
+      console.log(err);
+      if(err.error.error.match('Login falhou')){
+        this.authService.message(err.error.error)
+      }
     }); 
   }
 }
@@ -41,6 +38,7 @@ export class LoginComponent {
   
 } catch (error) {
   this.authService
+  /* next: response => {
 } */
 /* next: response => {
 //next: () => {

@@ -20,13 +20,13 @@
     <h3>Nome de usuário</h3>
     <mat-form-field class="full-width">
       <mat-label>username</mat-label>
-      <input matInput placeholder="Ex. admin">
+      <input [(ngModel)]="username" name="username" matInput placeholder="Ex. admin">
     </mat-form-field>
     
     <h3>Senha</h3>
     <mat-form-field class="full-width">
       <mat-label>password</mat-label>
-      <input matInput placeholder="Ex. senha123">
+      <input [(ngModel)]="password" name="password" matInput placeholder="Ex. senha123">
     </mat-form-field>
 
     <button (click)="login()" mat-stroked-button color="accent">ENTRAR</button>

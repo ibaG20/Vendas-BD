@@ -1,1 +1,60 @@
-<p>vendas-create works!</p>
+<form class="form"> 
+
+    <h1>Criando nova venda</h1>
+
+
+    <h2>Código da Venda:</h2>
+    <mat-form-field class="full-width">
+      <mat-label>id</mat-label>
+      <input  matInput placeholder="Ex. 1200000">
+    </mat-form-field>
+    <!-- [(ngModel)]="password" name="password" -->
+
+    <h2>Horário:</h2>
+    <mat-form-field class="full-width">
+      <mat-label>horário</mat-label>
+      <input  matInput placeholder="Ex. 01:11:00">
+    </mat-form-field>
+
+    <h2>Valor Total:</h2>
+    <mat-form-field class="full-width">
+      <mat-label>preço</mat-label>
+      <input  matInput placeholder="Ex. 150">
+    </mat-form-field>
+
+    <h2>Código do Funcionário:</h2>
+    <mat-form-field class="full-width">
+      <mat-label>id_funcionario</mat-label>
+      <input  matInput placeholder="Ex. 1">
+    </mat-form-field>
+
+    <h2>Item:</h2>
+    <h3>Código do Item:</h3>
+    <mat-form-field class="full-width">
+      <mat-label>id_funcionario</mat-label>
+      <input  matInput placeholder="Ex. 12124">
+    </mat-form-field>
+    <h3>Quantidade:</h3>
+    <mat-form-field class="full-width">
+      <mat-label>id_funcionario</mat-label>
+      <input  matInput placeholder="Ex. 3">
+    </mat-form-field>
+    <h3>Valor Parcial:</h3>
+    <mat-form-field class="full-width">
+      <mat-label>id_funcionario</mat-label>
+      <input  matInput placeholder="Ex. 50">
+    </mat-form-field>
+    <h3>Código do Produto:</h3>
+    <mat-form-field class="full-width">
+      <mat-label>id_funcionario</mat-label>
+      <input  matInput placeholder="Ex. 100">
+    </mat-form-field>
+    <h3>Código da Venda:</h3>
+    <mat-form-field class="full-width">
+      <mat-label>id_funcionario</mat-label>
+      <input  matInput placeholder="Ex. 1200000">
+    </mat-form-field>
+
+    <button  (click)="create()" mat-stroked-button color="accent">CRIAR VENDA</button>
+    <button (click)="cancel()" mat-stroked-button color="warn">CANCELAR</button>
+  </form>

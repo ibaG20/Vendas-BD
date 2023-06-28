@@ -25,13 +25,13 @@ const routes: Routes = [
   {
     path: 'fornecedores',
     component: FornecedoresReadComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   
   {
     path: 'funcionarios',
     component: FuncionariosReadComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   
   {
@@ -49,13 +49,13 @@ const routes: Routes = [
   {
     path: 'itens',
     component: ItensReadComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   
   {
     path: 'produtos',
     component: ProdutosReadComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   }
 ];
 
