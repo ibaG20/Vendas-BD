@@ -31,6 +31,7 @@ import { ProdutosReadComponent } from './views/components/produto/produtos-read/
 import { ItensReadComponent } from './views/components/itens/itens-read/itens-read.component';
 import { LoginComponent } from './views/components/login/login.component';
 import { JwtInterceptorService } from './services/jwt-interceptor.service';
+import { VendasCreateComponent } from './views/components/vendas/vendas-create/vendas-create.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { JwtInterceptorService } from './services/jwt-interceptor.service';
     VendasReadComponent,
     ProdutosReadComponent,
     ItensReadComponent,
-    LoginComponent
+    LoginComponent,
+    VendasCreateComponent
   ],
   imports: [
     BrowserModule,

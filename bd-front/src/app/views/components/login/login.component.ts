@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Login } from 'src/app/models/login';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,28 +10,49 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 
 export class LoginComponent {
-  username!: string;
-  password!: string;
-  errorMessage!: string; // Variável para armazenar a mensagem de erro
+
+  /* loginn: Login ={
+    
+  } */
+  /* username!: 'administrador';
+  password!: 'root'; */
+
+  username!: "administrador";
+  password!: "root";
+  //errorMessage!: string; // Variável para armazenar a mensagem de erro
 
   constructor(private authService: AuthService, private router: Router) {} // Injetando o Router
 
-  login() {
-    this.authService.login(this.username, this.password).subscribe({
-      //next: response => {
-      next: () => {
-        // Redireciona para a página principal após o login bem-sucedido
-        this.router.navigate(['/']);
-      },
-      //error: err => {
-      error: () => {
-        // Lidar com erros aqui
-        // Exibe uma mensagem de erro
-        this.errorMessage = 'Falha no login. Por favor, tente novamente.';
-      }
-    });
+  /* entrar():void{
+    this.router.navigate(['/']);
+  } */
+
+  login():void {
+    this.authService.login(this.username, this.password).subscribe((res) =>{
+      this.router.navigate(['/']);
+      this.authService.message('Login realizado com sucesso!')
+    }, err => {
+      console.log(err)
+    }); 
   }
 }
+/* try {
+  this.router.navigate(['/']);
+  
+} catch (error) {
+  this.authService
+} */
+/* next: response => {
+//next: () => {
+  // Redireciona para a página principal após o login bem-sucedido
+  this.router.navigate(['/']);
+},
+error: err => {
+//error: () => {
+  // Lidar com erros aqui
+  // Exibe uma mensagem de erro
+  this.errorMessage = 'Falha no login. Por favor, tente novamente.';
+} */
 //----------------------------------------
 
 

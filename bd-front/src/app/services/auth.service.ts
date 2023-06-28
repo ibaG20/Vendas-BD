@@ -1,21 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+
+  baseUrl: String = environment.baseUrl;
+
+  constructor(private http: HttpClient, private snack: MatSnackBar) {}
 
   login(username: string, password: string) {
+    const url = this.baseUrl + "/login";
     // Faz uma requisição POST para a rota '/api/login', enviando o nome de usuário e a senha
-    return this.http.post<{ token: string }>('/api/login', { username, password })
+    return this.http.post<{ token: string }>(url, { username, password })
       .pipe(
-        // Usa o método tap() do RxJS para realizar uma ação com a resposta recebida
         tap(response => {
-          // Armazena o token JWT no LocalStorage
-          localStorage.setItem('auth_token', response.token);
+          localStorage.setItem('auth_token', response.token);          // Armazena o token JWT no LocalStorage
         })
       );
+  }
+
+  message(msg: String): void {
+    this.snack.open(`${msg}`, 'OK', {
+      horizontalPosition: 'end', 
+      verticalPosition: 'top',
+      duration: 4000
+    })
   }
 }
 

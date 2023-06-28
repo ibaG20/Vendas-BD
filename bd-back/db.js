@@ -1,47 +1,48 @@
-/* 
-import { Pool } from 'pg';
-
-const pools = {
-  normal: new Pool({
-    host: "localhost",
-    user: "normal_user",
-    password: "normal_password",
-    database: "mydb"
-  }),
-  admin: new Pool({
-    host: "localhost",
-    user: "admin_user",
-    password: "admin_password",
-    database: "mydb"
-  })
-};
-
-export const db = {
-  normal: pools.normal,
-  admin: pools.admin
-};
- */
 
 
 /* import pkg from 'pg';
 const { Client } = pkg;
 
-export const db = new Client({
+export const db = {
     host: "localhost",
-    user: "administrador",
+    user: "ADMINISTRADOR",
     password: "root", 
-    database: "attdb2" 
-});
+    database: "postgres" 
+}; */
+//db.connect();
 
-db.connect();  */
-
+//------------------------------
 import pkg from 'pg';
 const { Client } = pkg;
 
-export const db = {
+export const dbAdmin = new Client({
     host: "localhost",
-    user: "postgres",
-    password: "root", 
-    database: "postgres" 
-};
-//db.connect();
+    user: "administrador",
+    password: "root",
+    database: "postgres"
+});
+
+export const dbUser = new Client({
+    host: "localhost",
+    user: "vendedor",
+    password: "root",
+    database: "postgres"
+});
+
+async function startApp() {
+  try {
+      await dbAdmin.connect();
+      console.log('Connected as admin');
+
+      // fazer consultas como admin...
+
+      await dbUser.connect();
+      console.log('Connected as user');
+
+      // fazer consultas como usuário...
+  } catch (err) {
+      console.error('Connection error', err.stack);
+  }
+}
+
+startApp();

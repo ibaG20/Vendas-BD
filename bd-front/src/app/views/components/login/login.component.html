@@ -1,7 +1,33 @@
-<p>login works!</p>
-
-<form (submit)="login()">
+<!-- <form (submit)="login()">
     <input type="text" [(ngModel)]="username" name="username" placeholder="Username" required>
     <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required>
     <button type="submit">Login</button>
+  </form> -->
+
+<!--  
+  <mat-form-field (submit)="login()">
+    <mat-label>username</mat-label>
+    <input matInput>
+  </mat-form-field>
+
+  <mat-form-field (submit)="login()">
+    <mat-label>password</mat-label>
+    <input matInput>
+  </mat-form-field> -->
+  
+  <form class="form"> 
+    <h1>Login</h1>
+    <h3>Nome de usuário</h3>
+    <mat-form-field class="full-width">
+      <mat-label>username</mat-label>
+      <input matInput placeholder="Ex. admin">
+    </mat-form-field>
+    
+    <h3>Senha</h3>
+    <mat-form-field class="full-width">
+      <mat-label>password</mat-label>
+      <input matInput placeholder="Ex. senha123">
+    </mat-form-field>
+
+    <button (click)="login()" mat-stroked-button color="accent">ENTRAR</button>
   </form>

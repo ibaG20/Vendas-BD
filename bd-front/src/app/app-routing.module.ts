@@ -8,6 +8,7 @@ import { ProdutosReadComponent } from './views/components/produto/produtos-read/
 import { ItensReadComponent } from './views/components/itens/itens-read/itens-read.component';
 import { LoginComponent } from './views/components/login/login.component';
 import { AuthGuard } from './guard/auth.guard';
+import { VendasCreateComponent } from './views/components/vendas/vendas-create/vendas-create.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,13 @@ const routes: Routes = [
   {
     path: 'vendas',
     component: VendasReadComponent,
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'vendas/create',
+    component: VendasCreateComponent,
+    //canActivate: [AuthGuard]
   },
   
   {

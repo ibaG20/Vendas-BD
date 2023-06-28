@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Venda } from 'src/app/models/venda';
 import { VendaService } from 'src/app/services/venda.service';
 
@@ -18,7 +19,10 @@ export class VendasReadComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private service: VendaService){}
+  constructor(
+    private service: VendaService,
+    private router: Router
+    ){}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -30,5 +34,9 @@ export class VendasReadComponent implements AfterViewInit {
       this.vendas = resposta;
       console.log(this.vendas)
     })
+  }
+
+  navigateToCreate(): void {
+    this.router.navigate(['vendas/create'])
   }
 }
