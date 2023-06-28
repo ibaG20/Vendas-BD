@@ -39,9 +39,9 @@ import pkg from 'pg';
 const { Client } = pkg;
 
 export const db = {
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: 'root',
+    host: "localhost",
+    user: "postgres",
+    password: "root", 
+    database: "postgres" 
 };
 //db.connect();
