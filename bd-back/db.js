@@ -40,8 +40,8 @@ import pkg from 'pg';
 
 export const db = {
     host: "localhost",
-    user: "administrador",
+    user: "vendedor",
     password: "root", 
-    database: "attdb2" 
+    database: "postgres" 
 };
 //db.connect();
