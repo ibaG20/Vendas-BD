@@ -39,6 +39,20 @@ CREATE TABLE tb_itens(
 	tb_vendas_ven_codigo BIGINT
 );
 
+/*-------------------------------------------------------------------------------------*/
+
+/*cria role admin e user*/
+CREATE ROLE admin CREATEDB CREATEROLE;
+CREATE ROLE user NOSUPERUSER NOCREATEDB NOCREATEROLE;
+
+/*cria usuario administrador*/
+CREATE USER ADMINISTRADOR WITH PASSWORD 'root';
+/*atribui a role admin pra esse usuario*/
+GRANT admin TO ADMINISTRADOR;
+
+
+/*-----------------------------como tava antes-----------------------------------*/
+/*
 CREATE USER ADMINISTRADOR;
 GRANT ALL PRIVILEGES ON DATABASE attDB2 TO ADMINISTRADOR;
 
@@ -49,4 +63,4 @@ GRANT SELECT ON tb_produto TO ADMINISTRADOR;
 GRANT SELECT ON tb_itens TO ADMINISTRADOR;
 
 ALTER USER ADMINISTRADOR WITH PASSWORD 'root';
-
+*/

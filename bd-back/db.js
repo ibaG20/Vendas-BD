@@ -40,8 +40,8 @@ const { Client } = pkg;
 
 export const db = {
     host: "localhost",
-    user: "administrador",
+    user: "postgres",
     password: "root", 
-    database: "attdb2" 
+    database: "banco-vendas" 
 };
 //db.connect();

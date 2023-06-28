@@ -9,7 +9,7 @@ import { FooterComponent } from './views/components/template/footer/footer.compo
 import { NavComponent } from './views/components/template/nav/nav.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -29,6 +29,8 @@ import { FuncionariosReadComponent } from './views/components/funcionarios/funci
 import { VendasReadComponent } from './views/components/vendas/vendas-read/vendas-read.component';
 import { ProdutosReadComponent } from './views/components/produto/produtos-read/produtos-read.component';
 import { ItensReadComponent } from './views/components/itens/itens-read/itens-read.component';
+import { LoginComponent } from './views/components/login/login.component';
+import { JwtInterceptorService } from './services/jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -41,33 +43,37 @@ import { ItensReadComponent } from './views/components/itens/itens-read/itens-re
     FuncionariosReadComponent,
     VendasReadComponent,
     ProdutosReadComponent,
-    ItensReadComponent
+    ItensReadComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
- AppRoutingModule,
- BrowserAnimationsModule,
- HttpClientModule,
- BrowserModule,
- AppRoutingModule,
- BrowserAnimationsModule,
- MatToolbarModule,
- MatSidenavModule,
- MatIconModule,
- MatButtonModule,
- MatListModule,
- MatCardModule,
- MatTableModule,
- MatSelectModule,
- MatInputModule,
- MatDatepickerModule,
- FormsModule,
- ReactiveFormsModule,
- MatPaginatorModule,
- MatSnackBarModule,
- MatMenuModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+    MatListModule,
+    MatCardModule,
+    MatTableModule,
+    MatSelectModule,
+    MatInputModule,
+    MatDatepickerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatSnackBarModule,
+    MatMenuModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+//---------------------

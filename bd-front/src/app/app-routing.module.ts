@@ -6,6 +6,9 @@ import { FuncionariosReadComponent } from './views/components/funcionarios/funci
 import { VendasReadComponent } from './views/components/vendas/vendas-read/vendas-read.component';
 import { ProdutosReadComponent } from './views/components/produto/produtos-read/produtos-read.component';
 import { ItensReadComponent } from './views/components/itens/itens-read/itens-read.component';
+import { LoginComponent } from './views/components/login/login.component';
+import { AuthGuard } from './guard/auth.guard';
+
 
 const routes: Routes = [
   {
@@ -14,23 +17,38 @@ const routes: Routes = [
   },
 
   {
-    path: 'fornecedores',
-    component: FornecedoresReadComponent
+    path: 'login',
+    component: LoginComponent
   },
 
+  {
+    path: 'fornecedores',
+    component: FornecedoresReadComponent,
+    canActivate: [AuthGuard]
+  },
+  
   {
     path: 'funcionarios',
-    component: FuncionariosReadComponent
+    component: FuncionariosReadComponent,
+    canActivate: [AuthGuard]
   },
-
+  
   {
     path: 'vendas',
-    component: VendasReadComponent
+    component: VendasReadComponent,
+    canActivate: [AuthGuard]
   },
-
+  
   {
     path: 'itens',
-    component: ItensReadComponent
+    component: ItensReadComponent,
+    canActivate: [AuthGuard]
+  },
+  
+  {
+    path: 'produtos',
+    component: ProdutosReadComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -39,3 +57,8 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+
+//--------------------------
+
+

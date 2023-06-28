@@ -1,33 +1,33 @@
 <div class="mat-elevation-z8 container">
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="itens">
   
       <!-- Position Column -->
       <ng-container matColumnDef="codigo">
         <th mat-header-cell *matHeaderCellDef> Código </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ite_codigo}} </td>
       </ng-container>
   
       <!-- Name Column -->
       <ng-container matColumnDef="quantidade">
         <th mat-header-cell *matHeaderCellDef> Quantidade </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ite_quantidade}} </td>
       </ng-container>
   
       <!-- Weight Column -->
       <ng-container matColumnDef="valor_parcial">
         <th mat-header-cell *matHeaderCellDef> Valor Parcial </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.ite_valor_parcial}} </td>
       </ng-container>
   
       <!-- Symbol Column -->
       <ng-container matColumnDef="produtos_codigo">
         <th mat-header-cell *matHeaderCellDef> Produtos_Código </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.tb_produtos_pro_codigo}} </td>
       </ng-container>
 
       <ng-container matColumnDef="vendas_codigo">
         <th mat-header-cell *matHeaderCellDef> Vendas_Código </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.tb_vendas_ven_codigo}} </td>
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
