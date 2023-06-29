@@ -72,64 +72,105 @@ const { Client } = pkg;
 import { dbAdmin, dbUser } from "../db.js"; // Importa as conexões
 
 export const getVendas = async (req, res) => {
-    const q = "SELECT * FROM tb_vendas";
+  const q = "SELECT * FROM tb_vendas";
 
-    // Verifica o usuário através do token na requisição
-    const user = jwt.verify(req.headers.authorization, 'your-secret-key');
+  // Verifica o usuário através do token na requisição
+  const user = jwt.verify(req.headers.authorization.split(' ')[1], 'your-secret-key');
+  console.log(user);
+  // Cria um novo cliente
+  let client
+  if (user.role === 'user') {
+    client = new Client({
+      host: "localhost",
+      database: "postgres",
+      user: "administrador",
+      password: "root",
+    });
+  } else if (user.role === 'admin') {
+    client = new Client({
+      host: "localhost",
+      database: "postgres",
+      user: "vendedor",
+      password: "root",
+    });
+  } else {
+    return res.status(401).json({ message: "Role inválido" });
+  }
+  console.log(client);
 
-    // Cria um novo cliente
-    let client;
+  try {
+    // Conecta o cliente
+    await client.connect();
 
-    if(user.role === 'admin'){
-        client = dbAdmin;
-    } else if(user.role === 'user'){
-        client = dbUser;
-    } else {
-        return res.status(401).json({ message: "Role inválido" });
+    // Inicia uma transação
+    await client.query('BEGIN');
+
+    // Insere os dados da venda na tabela tb_vendas
+    const vendaQuery = {
+      text: 'INSERT INTO tb_vendas (ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo) VALUES ($1, $2, $3, $4) RETURNING *',
+      values: [ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo]
+    };
+
+    const vendaResult = await client.query(vendaQuery);
+    const vendaId = vendaResult.rows[0].ven_codigo;
+
+    for (let i = 0; i < itens.length; i++) {
+      // Insere os itens da venda na tabela tb_itens_venda
+      let itensQuery = {
+        text: 'INSERT INTO tb_itens (ite_codigo, ite_quantidade, ite_valor_parcial, tb_produtos_pro_codigo, tb_vendas_ven_codigo) VALUES ($1, $2, $3, $4, $5)',
+        values: [itens[i].ite_codigo, itens[i].ite_quantidade, itens[i].ite_valor_parcial, itens[i].tb_produtos_pro_codigo, vendaId]
+      };
+
+      await client.query(itensQuery.text, itensQuery.values);
+
+      // Confirma a transação
+      await client.query('COMMIT');
+
+      // Retorna uma resposta de sucesso
+      return res.status(200).json({ message: 'Venda criada com sucesso!' });
     }
+  } catch (err) {
+    // Desfaz a transação em caso de erro
+    await client.query('ROLLBACK');
 
-    try {
-        // Conecta o cliente
-        await client.connect();
-
-        // Realiza a consulta
-        const result = await client.query(q);
-
-        // Responde com os dados
-        if (!result.rows.length) {
-            return res.status(200).json('vazio');
-        } else {
-            return res.status(200).json(result.rows);
-        }
-    } catch (err) {
-        // Se houver um erro, responde com o erro
-        return res.json(err);
-    } finally {
-        // Independentemente do que acontecer, fecha a conexão
-        await client.end();
-    }
+    // Retorna o erro
+    return res.status(500).json({ error: err.message });
+  } finally {
+    // Independentemente do que acontecer, fecha a conexão
+    await client.end();
+  }
 };
 
 //------------------------------------------------
-export const postVendas = async(req, res) => {
+export const postVendas = async (req, res) => {
   const { ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo, itens } = req.body;
 
   const insertVendaSql = "INSERT INTO tb_vendas(ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo) VALUES ($1, $2, $3, $4)";
   const vendaValues = [ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo];
 
   // Verifica o usuário através do token na requisição
-  const user = jwt.verify(req.headers.authorization, 'your-secret-key');
-
+  const user = jwt.verify(req.headers.authorization.split(' ')[1], 'your-secret-key');
+  console.log(user);
   // Cria um novo cliente
-  let client;
-
-  if(user.role === 'admin'){
-      client = dbAdmin;
-  } else if(user.role === 'user'){
-      client = dbUser;
+  let client
+  if (user.role === 'user') {
+    client = new Client({
+      host: "localhost",
+      database: "postgres",
+      user: "administrador",
+      password: "root",
+    });
+  } else if (user.role === 'admin') {
+    client = new Client({
+      host: "localhost",
+      database: "postgres",
+      user: "vendedor",
+      password: "root",
+    });
   } else {
-      return res.status(401).json({ message: "Role inválido" });
+    return res.status(401).json({ message: "Role inválido" });
   }
+  console.log(client);
 
   try {
     // Conecta o cliente
@@ -139,21 +180,18 @@ export const postVendas = async(req, res) => {
     await client.query(insertVendaSql, vendaValues);
 
     const vendaId = vendaValues[0]; // Obtém o ID da venda inserida
+    sqlItens = 'INSERT INTO tb_itens (ite_codigo, ite_quantidade, ite_valor_parcial, tb_produtos_pro_codigo, tb_vendas_ven_codigo) VALUES ($1, $2, $3, $4, $5)';
 
-    const insertItensSql = "INSERT INTO tb_itens(ite_codigo, ite_quantidade, ite_valor_parcial, tb_produtos_pro_codigo, tb_vendas_ven_codigo) VALUES ($1, $2, $3, $4, $5)";
+    for (let i = 0; i < itens.length; i++) {
+      // Insere os itens da venda na tabela tb_itens_venda
+ 
+      values = [itens[i].ite_codigo, itens[i].ite_quantidade, itens[i].ite_valor_parcial, itens[i].tb_produtos_pro_codigo, vendaId];
+ 
+      // Realiza a inserção dos itens
+      await client.query(sqlItens, values);
 
-    const itensValues = itens.map(item => [
-      item.ite_codigo,
-      item.ite_quantidade,
-      item.ite_valor_parcial,
-      item.tb_produtos_pro_codigo,
-      vendaId
-    ]);
-
-    // Realiza a inserção dos itens
-    await client.query(insertItensSql, itensValues);
-
-    return res.status(200).json("Venda e itens inseridos com sucesso!");
+      return res.status(200).json("Venda e itens inseridos com sucesso!");
+    }
 
   } catch (err) {
     // Se houver um erro, responde com o erro

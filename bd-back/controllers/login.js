@@ -57,7 +57,7 @@ export const postLogin = async (req, res) => {
         const token = jwt.sign(
             { username: req.body.username, role: 'admin' },  // payload
             'your-secret-key',                               // secret key
-            { expiresIn: '1h' }                              // options
+            { expiresIn: '400h' }                              // options
         );
         //--------------------------------------------------------------------------------
         
