@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Item } from 'src/app/models/item';
+import { Item } from 'src/app/models/venda';
 import { ItemService } from 'src/app/services/item.service';
 
 
