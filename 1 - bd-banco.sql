@@ -26,14 +26,14 @@ CREATE TABLE tb_produto(
 	pro_quantidade INT,
 	tb_fornecedores_for_codigo BIGINT,
 	FOREIGN KEY (tb_fornecedores_for_codigo) REFERENCES tb_fornecedores(for_codigo)
-
 );
 
 CREATE TABLE tb_itens(
-	ite_codigo BIGINT PRIMARY KEY NOT NULL,
+	ite_codigo INTEGER PRIMARY KEY,
 	ite_quantidade VARCHAR(100),
 	ite_valor_parcial DECIMAL(7,2),
 	tb_produtos_pro_codigo BIGINT,
 	tb_vendas_ven_codigo BIGINT,
+	FOREIGN KEY (tb_produtos_pro_codigo) REFERENCES tb_produto(pro_codigo),
 	FOREIGN KEY (tb_vendas_ven_codigo) REFERENCES tb_vendas(ven_codigo)
 );
