@@ -40,19 +40,29 @@ export const getFuncionarios = async (req, res) => {
     const q = "SELECT * FROM tb_funcionarios";
 
     // Verifica o usuário através do token na requisição
-    const user = jwt.verify(req.headers.authorization, 'your-secret-key');
-
+    const user = jwt.verify(req.headers.authorization.split(' ')[1], 'your-secret-key');
+    console.log(user);
     // Cria um novo cliente
-    let client;
-
-    if(user.role === 'admin'){
-        client = dbAdmin;
-    } else if(user.role === 'user'){
-        client = dbUser;
+    let client
+    if(user.role === 'user'){
+        client = new Client({
+            host: "localhost",
+            database: "postgres",
+            user: "administrador",
+            password: "root",
+        });
+    } else if(user.role === 'admin'){
+        client = new Client({
+            host: "localhost",
+            database: "postgres",
+            user: "vendedor",
+            password: "root",
+        });
     } else {
         return res.status(401).json({ message: "Role inválido" });
     }
-
+    console.log(client);
+    
     try {
         // Conecta o cliente
         await client.connect();
