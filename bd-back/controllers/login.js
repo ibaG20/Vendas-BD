@@ -52,10 +52,18 @@ export const postLogin = async (req, res) => {
 
     try {
         await client.connect(); // Tenta conectar
-
+        let roledb;
+        if(req.body.username === 'vendedor'){
+            roledb = 'admin';
+        } else if(req.body.username === 'administrador'){
+            roledb = 'user';
+        } else {
+            return res.status(401).json({ message: "Role inválido" });
+        }
+        console.log(roledb);
         //---------------------------autenticação bem-sucedida--------------------------------
         const token = jwt.sign(
-            { username: req.body.username, role: 'admin' },  // payload
+            { username: req.body.username, role: roledb },  // payload
             'your-secret-key',                               // secret key
             { expiresIn: '400h' }                              // options
         );
