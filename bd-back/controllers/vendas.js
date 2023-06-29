@@ -6,6 +6,7 @@ import { dbAdmin, dbUser } from "../db.js"; // Importa as conexões
 export const getVendas = async (req, res) => {
   const q = "SELECT * FROM tb_vendas";
 
+
   // Verifica o usuário através do token na requisição
   const user = jwt.verify(req.headers.authorization.split(' ')[1], 'your-secret-key');
   console.log(user);
@@ -34,39 +35,18 @@ export const getVendas = async (req, res) => {
     // Conecta o cliente
     await client.connect();
 
-    // Inicia uma transação
-    await client.query('BEGIN');
+    // Realiza a consulta
+    const result = await client.query(q);
 
-    // Insere os dados da venda na tabela tb_vendas
-    const vendaQuery = {
-      text: 'INSERT INTO tb_vendas (ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo) VALUES ($1, $2, $3, $4) RETURNING *',
-      values: [ven_codigo, ven_horario, ven_valor_total, tb_funcionarios_fun_codigo]
-    };
-
-    const vendaResult = await client.query(vendaQuery);
-    const vendaId = vendaResult.rows[0].ven_codigo;
-
-    for (let i = 0; i < itens.length; i++) {
-      // Insere os itens da venda na tabela tb_itens_venda
-      let itensQuery = {
-        text: 'INSERT INTO tb_itens (ite_codigo, ite_quantidade, ite_valor_parcial, tb_produtos_pro_codigo, tb_vendas_ven_codigo) VALUES ($1, $2, $3, $4, $5)',
-        values: [itens[i].ite_codigo, itens[i].ite_quantidade, itens[i].ite_valor_parcial, itens[i].tb_produtos_pro_codigo, vendaId]
-      };
-
-      await client.query(itensQuery.text, itensQuery.values);
-
-      // Confirma a transação
-      await client.query('COMMIT');
-
-      // Retorna uma resposta de sucesso
-      return res.status(200).json({ message: 'Venda criada com sucesso!' });
+    // Responde com os dados
+    if (!result.rows.length) {
+      return res.status(200).json('vazio');
+    } else {
+      return res.status(200).json(result.rows);
     }
   } catch (err) {
-    // Desfaz a transação em caso de erro
-    await client.query('ROLLBACK');
-
-    // Retorna o erro
-    return res.status(500).json({ error: err.message });
+    // Se houver um erro, responde com o erro
+    return res.json(err);
   } finally {
     // Independentemente do que acontecer, fecha a conexão
     await client.end();
@@ -115,11 +95,11 @@ export const postVendas = async (req, res) => {
     // Realiza a inserção da venda
     await client.query(insertVendaSql, vendaValues);
     for (let i = 1; i <= itens.length; i++) {
-        await client.query('COMMIT');
-        await client.query(insertItensSql, itensValues);
-        itensValues = [itens[i].ite_codigo, itens[i].ite_quantidade, itens[i].ite_valor_parcial, itens[i].tb_produtos_pro_codigo, vendaId];
-        console.log(itensValues);
-      }
+      await client.query('COMMIT');
+      await client.query(insertItensSql, itensValues);
+      itensValues = [itens[i].ite_codigo, itens[i].ite_quantidade, itens[i].ite_valor_parcial, itens[i].tb_produtos_pro_codigo, vendaId];
+      console.log(itensValues);
+    }
 
     // Confirma a transação
     await client.query('COMMIT');
