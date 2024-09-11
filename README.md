@@ -1,5 +1,4 @@
-# vendas-BD
-
+# Projeto de vendas para a matéria Banco de Dados 2
 ## Telas:
 ### Login:
 ![image](https://github.com/ibaG20/vendas-BD/assets/98984386/95b9fef8-3c2e-4795-b5e6-2c9ed7ffa809)
